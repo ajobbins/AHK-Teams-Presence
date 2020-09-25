@@ -10,8 +10,10 @@ Copy the files in this repo to somewhere AHK can execute them
 The images in this repo may not work if your taskbar is a differnt colour. In this case, take and trim screenshots of your own system tray icons and replace the examples provided here. Transparency in your taskbar will be problematic.
 
 ## Script Configuration
-In update_status.ahk, update the following variables
+In update_status.ahk, update the following variables:
+
 WebhookURI : Set this to the URI where your webhook posts to
+
 dir : Set this to the base directory where the images to check are located
 
 ## Running
