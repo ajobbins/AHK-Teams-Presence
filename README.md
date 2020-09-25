@@ -1,5 +1,5 @@
 # AHK-Teams-Presence
-AutoHotKey Script for reading MS Team status from tray icon and publishing webhook
+AutoHotKey Script for reading MS Team status from tray icon and publishing webhook. The sc-ipt scans the screen approximately onces every 10 seconds, and a webhook is pushed only if the status is changed. Regardless of state, an update webhook is sent approximately every 5 minutes as a form of keep-alive.
 
 ## Dependencies
 
