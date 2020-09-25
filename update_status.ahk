@@ -9,6 +9,12 @@ WebhookURI = https://<YOUR URL HERE>
 ; Set the base directory containing the MS Teams status icons
 dir := "C:\<YOUR PATH HERE>"
 
+; Screen coordinates to check for image. Makes this as small as reasonably possible to speed up script execution
+Top_Left_Width = 1350
+Top_Left_Height =  1020
+Bottom_Right_Width = 1725
+Top_Right_Height = 1080
+
 ; File names for the icons
 img := [ "available.png"
 	, "busy.png"
@@ -22,7 +28,7 @@ LoopCount = 0
 SendWebhook()
 {
 	; POSTs a JSON payload  {"status":"%CurrentStatus%"} to the Webhook URI defined
-  global
+        global
 	try {
 	WinHTTP := ComObjCreate("WinHTTP.WinHttpRequest.5.1")
 	WinHTTP.Open("POST", WebhookURI, 0)
@@ -39,7 +45,7 @@ SendWebhook()
 	 CurrentStatus = Unavailable	 
 	    for i, v in img {
 		    CoordMode Pixel
-			ImageSearch, FoundX, FoundY, 1350,1020, 1725, 1080, *5 %dir%\%v%
+			ImageSearch, FoundX, FoundY, %Top_Left_Width%, %Top_Left_Height%, %Bottom_Right_Width%, %Top_Right_Height%, *5 %dir%\%v%
 			if !errorlevel {
 				
 			switch % img[a_index]
