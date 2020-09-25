@@ -1,0 +1,65 @@
+#Add to existing automations.yaml file
+
+
+#Process the incoming webhook
+- alias: Process Presence Incoming Webhook
+  description: ''
+  trigger:
+  - platform: webhook
+    webhook_id: [MAKE THIS SUPER UNIQUE - ITS YOUR SECURITY]
+  condition: []
+  action:
+  - service: input_text.set_value
+    entity_id: input_text.teams_status
+    data:
+      value: '{{ trigger.json.status }}'
+#If the automation isnt restarted within 6 minutes due to a new incoming webhook, the status is changed to offline	  
+  - delay: 00:06:00
+  - service: input_text.set_value
+    data:
+      value: Offline
+    entity_id: input_text.teams_status
+  mode: restart
+  
+
+#Change an RGB light to signal presence
+- alias: Change Busy Light Colours
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: input_text.teams_status
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_text.teams_status
+        state: Available
+      sequence:
+      - service: light.turn_on
+        data:
+          color_name: green
+        entity_id: light.YOUR_RGB_LIGHT
+    - conditions:
+      - condition: state
+        entity_id: input_text.teams_status
+        state: Busy
+      sequence:
+      - service: light.turn_on
+        data:
+          color_name: orange
+        entity_id: light.YOUR_RGB_LIGHT
+    - conditions:
+      - condition: state
+        entity_id: input_text.teams_status
+        state: Do Not Disturb
+      sequence:
+      - service: light.turn_on
+        data:
+          color_name: Red
+        entity_id: light.YOUR_RGB_LIGHT
+    default:
+    - service: light.turn_off
+      data: {}
+      entity_id: light.YOUR_RGB_LIGHT
+  mode: single
