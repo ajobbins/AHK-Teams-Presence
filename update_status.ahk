@@ -4,7 +4,8 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 ; Set the Webhook URI to POST to
-WebhookURI = https://<YOUR URL HERE>
+; Example below for a Home Assistant endpoint, modify to suit
+WebhookURI = https://your-home-assistant:8123/api/webhook/some_hook_id
 
 ; Set the base directory containing the MS Teams status icons
 dir := "C:\<YOUR PATH HERE>"
