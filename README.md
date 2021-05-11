@@ -1,5 +1,5 @@
 # AHK-Teams-Presence
-AutoHotKey Script for reading MS Team status from tray icon and publishing webhook. The script scans the screen approximately onces every 10 seconds, and a webhook is pushed only if the status is changed. Regardless of state, an update webhook is sent approximately every 5 minutes as a form of keep-alive.
+AutoHotKey Script for reading MS Team status from the teams log file on Windows and publishing webhook. The script tails the log file for changes and when a RegEx match is found for a status change, the status is published as a webhook. Regardless of state, an update webhook is sent approximately every 5 minutes as a form of keep-alive.
 
 ## Dependencies
 
@@ -7,14 +7,13 @@ Make sure you are running a recent version of [AutoHotKey](https://www.autohotke
 
 ## Setting Up
 Copy the files in this repo to somewhere AHK can execute them
-The images in this repo may not work if your taskbar is a differnt colour. In this case, take and trim screenshots of your own system tray icons and replace the examples provided here. Transparency in your taskbar will be problematic.
 
 ## Script Configuration
-In update_status.ahk, update the following variables:
+In TeamsLogStatus.ahk, update the following:
 
 WebhookURI : Set this to the URI where your webhook posts to
 
-dir : Set this to the base directory where the images to check are located
+On the line (19) beginning with 'lt := new CLogTailer', add your local windows username to the file path and confirm the filepath is correct for your teams log file
 
 ## Running
 Execute the script manually or set up a task to run it automatically
@@ -22,10 +21,14 @@ Execute the script manually or set up a task to run it automatically
 ## Processing Output
 The script simply passes a status as a JSON payload as a POST to the URI configured. It's up to you how to process that in a useful way. In my own use case, the webhook is processed by my Home Assistant instance and updates an input_text helper. An example Home Assistant automation is provided.
 
-## Limitations
+## Not Working / To Do
 
-This script determine yours teams status by looking at the icon in the system tray, and as such is quite limited. A detailed status cannot be determined as the status colour in the icon can represent several states. For example - 'Do Not Distrub' and 'Presenting' both share the same icon, but this script cannot determine which it is.
+The script tails the log file (which can get quite large) and at present, when first run will not determine a status. I intended to add a function on load to read the log file in full (or from the end backwards) to find the current/latest status, however I have not had time to implement this. The workaround is to load the script before starting Teams, or to toggle your status to something else manually then "Reset status". I've been running this now for a couple of months and it's been very reliable.
 
-As this script needs to see the see the screen, it's unable to assess your presence if the screen is off, or something is obscuring the system tray icon - for example presenting in full screen mode. The script will provide a status of 'Unavailable' if the presence cannot be determined.
+I am also moving away from Teams as a platform (due to a job change) so am unlikley to maintain this going forward.
 
-One key limitation is the system icon changes when you have unread chat messages or other alerts. The system tray icon changes to an alert 'bell' ![Teams Alert Icon](https://raw.githubusercontent.com/ajobbins/AHK-Teams-Presence/master/icons/alert.png)  regardless of presence status. This script ignored the 'alert' status and maintains the last known status until the alert is cleared. This may result in an incorrect status if your actual status has changed before clearing the alert.
+Pull requests to maintain or to solve the lack of status on load are welcome.
+
+## Credits
+
+Credit to [cjsmile999](https://www.autohotkey.com/boards/memberlist.php?mode=viewprofile&u=75896&sid=f6e2b86cd0ec8262c29d58e99906d3f7) on the AHK forums for the starter code for the log tailer
