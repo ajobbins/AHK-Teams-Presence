@@ -11,7 +11,7 @@ Copy the files in this repo to somewhere AHK can execute them
 ## Script Configuration
 In TeamsLogStatus.ahk, update the following:
 
-WebhookURI : Set this to the URI where your webhook posts to
+WebhookURI : Set this to the URI where your webhook posts to e.g. https://your-home-assistant:8123/api/webhook/some_hook_id
 
 On the line (19) beginning with 'lt := new CLogTailer', add your local windows username to the file path and confirm the filepath is correct for your teams log file
 
