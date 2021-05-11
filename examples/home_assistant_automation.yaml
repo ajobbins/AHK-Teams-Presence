@@ -2,11 +2,11 @@
 
 
 #Process the incoming webhook
-- alias: Process Presence Incoming Webhook
+- alias: Process MS Teams Presence Incoming Webhook
   description: ''
   trigger:
   - platform: webhook
-    webhook_id: [MAKE THIS SUPER UNIQUE - ITS YOUR SECURITY]
+    webhook_id: [MAKE THIS SUPER UNIQUE - IT IS YOUR SECURITY]
   condition: []
   action:
   - service: input_text.set_value
@@ -52,12 +52,48 @@
     - conditions:
       - condition: state
         entity_id: input_text.teams_status
+        state: On The Phone
+      sequence:
+      - service: light.turn_on
+        data:
+          color_name: orange
+        entity_id: light.YOUR_RGB_LIGHT
+    - conditions:
+      - condition: state
+        entity_id: input_text.teams_status
+        state: In A Meeting
+      sequence:
+      - service: light.turn_on
+        data:
+          color_name: orange
+        entity_id: light.YOUR_RGB_LIGHT        
+    - conditions:
+      - condition: state
+        entity_id: input_text.teams_status
         state: Do Not Disturb
       sequence:
       - service: light.turn_on
         data:
           color_name: Red
         entity_id: light.YOUR_RGB_LIGHT
+    - conditions:
+      - condition: state
+        entity_id: input_text.teams_status
+        state: Focusing
+      sequence:
+      - service: light.turn_on
+        data:
+          color_name: Red
+        entity_id: light.YOUR_RGB_LIGHT
+    - conditions:
+      - condition: state
+        entity_id: input_text.teams_status
+        state: Presenting
+      sequence:
+      - service: light.turn_on
+        data:
+          color_name: Red
+        entity_id: light.YOUR_RGB_LIGHT        
     default:
     - service: light.turn_off
       data: {}
