@@ -7,7 +7,7 @@ SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
 
 
 ; Set the Webhook URI to POST to
-WebhookURI = <ADD YOUR WEBHOOK URI HERE>
+WebhookURI = <ADD YOUR WEBHOOK URI HERE e.g. https://your-home-assistant:8123/api/webhook/some_hook_id>
 
 ;Set a default Status
 CurrentStatus = Unknown
