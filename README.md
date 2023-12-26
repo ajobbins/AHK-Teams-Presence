@@ -29,9 +29,8 @@ The script simply passes a status as a JSON payload as a POST to the URI configu
 
 The script tails the log file (which can get quite large) and at present, when first run will not determine a status. I intended to add a function on load to read the log file in full (or from the end backwards) to find the current/latest status, however I have not had time to implement this. The workaround is to load the script before starting Teams, or to toggle your status to something else manually then "Reset status". I've been running this now for a couple of months and it's been very reliable.
 
-I am also moving away from Teams as a platform (due to a job change) so am unlikley to maintain this going forward.
 
-Pull requests to maintain or to solve the lack of status on load are welcome.
+Pull requests to maintain, solve the lack of status on load and to support the new Teams are welcome.
 
 ## Credits
 
