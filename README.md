@@ -1,3 +1,7 @@
+> [!NOTE]
+> This project was built to support Microsoft Teams classic. New Microsoft Teams is not currently supported.
+> At this stage, the project will not be updated to support the New Microsoft Teams, but pull requests are welcome.
+
 # AHK-Teams-Presence
 AutoHotKey Script for reading MS Team status from the teams log file on Windows and publishing webhook. The script tails the log file for changes and when a RegEx match is found for a status change, the status is published as a webhook. Regardless of state, an update webhook is sent approximately every 5 minutes as a form of keep-alive.
 
