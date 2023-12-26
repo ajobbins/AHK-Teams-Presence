@@ -15,8 +15,8 @@ CurrentStatus = Unknown
 ; Send a heartbeat webhook anyway every 5 mins
 SetTimer, SendWebhook, 300000
 
-
-lt := new CLogTailer("C:\Users\<USER>\AppData\Roaming\Microsoft\Teams\logs.txt", Func("NewLine"))
+logPath = %A_AppData%\Microsoft\Teams\logs.txt
+lt := new CLogTailer(logPath, Func("NewLine"))
 return
 
 
